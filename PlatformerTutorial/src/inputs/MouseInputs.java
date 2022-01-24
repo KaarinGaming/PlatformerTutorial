@@ -9,10 +9,11 @@ import main.GamePanel;
 public class MouseInputs implements MouseListener, MouseMotionListener {
 
 	private GamePanel gamePanel;
+
 	public MouseInputs(GamePanel gamePanel) {
-		this.gamePanel= gamePanel;
+		this.gamePanel = gamePanel;
 	}
-	
+
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -21,13 +22,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		gamePanel.setRectPos(e.getX(), e.getY());
+//		gamePanel.setRectPos(e.getX(), e.getY());
 
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Mouse clicked!");
+//		System.out.println("Mouse clicked!");
+		gamePanel.spawnRect(e.getX(),e.getY());
 
 	}
 
