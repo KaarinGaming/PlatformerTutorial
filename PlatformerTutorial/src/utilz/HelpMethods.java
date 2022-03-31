@@ -20,7 +20,6 @@ public class HelpMethods {
 			return true;
 		if (y < 0 || y >= Game.GAME_HEIGHT)
 			return true;
-
 		float xIndex = x / Game.TILES_SIZE;
 		float yIndex = y / Game.TILES_SIZE;
 
