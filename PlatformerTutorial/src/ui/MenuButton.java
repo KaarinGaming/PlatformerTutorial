@@ -68,7 +68,7 @@ public class MenuButton {
 	public Rectangle getBounds() {
 		return bounds;
 	}
-
+ 
 	public void applyGamestate() {
 		Gamestate.state = state;
 	}
