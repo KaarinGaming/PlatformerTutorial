@@ -1,6 +1,7 @@
 package utilz;
 
 import static utilz.Constants.EnemyConstants.CRABBY;
+import static utilz.Constants.ObjectConstants.*;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 
 import entities.Crabby;
 import main.Game;
+import objects.GameContainer;
+import objects.Potion;
 
 public class HelpMethods {
 
@@ -135,6 +138,32 @@ public class HelpMethods {
 					return new Point(i * Game.TILES_SIZE, j * Game.TILES_SIZE);
 			}
 		return new Point(1 * Game.TILES_SIZE, 1 * Game.TILES_SIZE);
+	}
+
+	public static ArrayList<Potion> GetPotions(BufferedImage img) {
+		ArrayList<Potion> list = new ArrayList<>();
+		for (int j = 0; j < img.getHeight(); j++)
+			for (int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getBlue();
+				if (value == RED_POTION || value == BLUE_POTION)
+					list.add(new Potion(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
+			}
+
+		return list;
+	}
+
+	public static ArrayList<GameContainer> GetContainers(BufferedImage img) {
+		ArrayList<GameContainer> list = new ArrayList<>();
+		for (int j = 0; j < img.getHeight(); j++)
+			for (int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getBlue();
+				if (value == BOX || value == BARREL)
+					list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
+			}
+
+		return list;
 	}
 
 }
