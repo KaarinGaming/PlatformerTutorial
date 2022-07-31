@@ -28,7 +28,7 @@ public class AudioPlayer {
 
 	private Clip[] songs, effects;
 	private int currentSongId;
-	private float volume = 1f;
+	private float volume = 0.5f;
 	private boolean songMute, effectMute;
 	private Random rand = new Random();
 
@@ -50,9 +50,9 @@ public class AudioPlayer {
 		effects = new Clip[effectNames.length];
 		for (int i = 0; i < effects.length; i++)
 			effects[i] = getClip(effectNames[i]);
-		
+
 		updateEffectsVolume();
-		
+
 	}
 
 	private Clip getClip(String name) {
