@@ -38,7 +38,8 @@ public class Game implements Runnable {
 		gamePanel = new GamePanel(this);
 		gameWindow = new GameWindow(gamePanel);
 		gamePanel.setFocusable(true);
-		gamePanel.requestFocus();
+//		gamePanel.requestFocus();
+		gamePanel.requestFocusInWindow();
 
 		startGameLoop();
 	}
@@ -49,7 +50,7 @@ public class Game implements Runnable {
 		menu = new Menu(this);
 		playing = new Playing(this);
 		gameOptions = new GameOptions(this);
-		
+
 	}
 
 	private void startGameLoop() {
