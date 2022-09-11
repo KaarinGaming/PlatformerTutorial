@@ -104,7 +104,8 @@ public class AudioPlayer {
 	}
 
 	public void playEffect(int effect) {
-		effects[effect].setMicrosecondPosition(0);
+		if (effects[effect].getMicrosecondPosition() > 0)
+			effects[effect].setMicrosecondPosition(0);
 		effects[effect].start();
 	}
 

@@ -1,7 +1,5 @@
 package ui;
 
-import static utilz.Constants.UI.URMButtons.URM_SIZE;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -12,30 +10,25 @@ import gamestates.Playing;
 import main.Game;
 import utilz.LoadSave;
 
-public class GameOverOverlay {
-
+public class GameCompletedOverlay {
 	private Playing playing;
 	private BufferedImage img;
+	private MenuButton quit, credit;
 	private int imgX, imgY, imgW, imgH;
-	private UrmButton menu, play;
 
-	public GameOverOverlay(Playing playing) {
+	public GameCompletedOverlay(Playing playing) {
 		this.playing = playing;
 		createImg();
 		createButtons();
 	}
 
 	private void createButtons() {
-		int menuX = (int) (335 * Game.SCALE);
-		int playX = (int) (440 * Game.SCALE);
-		int y = (int) (195 * Game.SCALE);
-		play = new UrmButton(playX, y, URM_SIZE, URM_SIZE, 0);
-		menu = new UrmButton(menuX, y, URM_SIZE, URM_SIZE, 2);
-
+		quit = new MenuButton(Game.GAME_WIDTH / 2, (int) (270 * Game.SCALE), 2, Gamestate.MENU);
+		credit = new MenuButton(Game.GAME_WIDTH / 2, (int) (200 * Game.SCALE), 3, Gamestate.CREDITS);
 	}
 
 	private void createImg() {
-		img = LoadSave.GetSpriteAtlas(LoadSave.DEATH_SCREEN);
+		img = LoadSave.GetSpriteAtlas(LoadSave.GAME_COMPLETED);
 		imgW = (int) (img.getWidth() * Game.SCALE);
 		imgH = (int) (img.getHeight() * Game.SCALE);
 		imgX = Game.GAME_WIDTH / 2 - imgW / 2;
@@ -49,50 +42,52 @@ public class GameOverOverlay {
 
 		g.drawImage(img, imgX, imgY, imgW, imgH, null);
 
-		menu.draw(g);
-		play.draw(g);
+		credit.draw(g);
+		quit.draw(g);
 	}
 
 	public void update() {
-		menu.update();
-		play.update();
+		credit.update();
+		quit.update();
 	}
 
-	private boolean isIn(UrmButton b, MouseEvent e) {
+	private boolean isIn(MenuButton b, MouseEvent e) {
 		return b.getBounds().contains(e.getX(), e.getY());
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		play.setMouseOver(false);
-		menu.setMouseOver(false);
+		credit.setMouseOver(false);
+		quit.setMouseOver(false);
 
-		if (isIn(menu, e))
-			menu.setMouseOver(true);
-		else if (isIn(play, e))
-			play.setMouseOver(true);
+		if (isIn(quit, e))
+			quit.setMouseOver(true);
+		else if (isIn(credit, e))
+			credit.setMouseOver(true);
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if (isIn(menu, e)) {
-			if (menu.isMousePressed()) {
+		if (isIn(quit, e)) {
+			if (quit.isMousePressed()) {
 				playing.resetAll();
+				playing.resetGameCompleted();
 				playing.setGamestate(Gamestate.MENU);
+
 			}
-		} else if (isIn(play, e))
-			if (play.isMousePressed()) {
+		} else if (isIn(credit, e))
+			if (credit.isMousePressed()) {
 				playing.resetAll();
-				playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+				playing.resetGameCompleted();
+				playing.setGamestate(Gamestate.CREDITS);
 			}
 
-		menu.resetBools();
-		play.resetBools();
+		quit.resetBools();
+		credit.resetBools();
 	}
 
 	public void mousePressed(MouseEvent e) {
-		if (isIn(menu, e))
-			menu.setMousePressed(true);
-		else if (isIn(play, e))
-			play.setMousePressed(true);
+		if (isIn(quit, e))
+			quit.setMousePressed(true);
+		else if (isIn(credit, e))
+			credit.setMousePressed(true);
 	}
-
 }
